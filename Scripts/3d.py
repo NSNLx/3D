@@ -57,6 +57,7 @@ def read_bezier_patches(file_path):
             parts = lines[current_line].split()
             current_line += 1
             pts.append([float(x) for x in parts])
+            #dodawanie punktów po odpowiednim podzieleniu dla danej linii
         patch = np.array(pts).reshape((deg_u + 1, deg_v + 1, 3))
         #zmiana struktury danych bez zmieniania wartości
         patches.append(patch)
@@ -80,7 +81,9 @@ def run_bezier_program(file_path):
         surface = bezier_surface(ctrl_pts, resolution=32)
         #zmiana rozdzielczości zmienia dokładność figury^
         points = surface.reshape(-1, 3)
+        #zmiana struktury tablicy bez zmiany danych
         mesh = pv.PolyData(points)
+        #zbiór danych geometrii powierzhcni
         mesh_surface = mesh.delaunay_2d()
         plotter.add_mesh(mesh_surface, color='lightblue', show_edges=True)
     # przetwarzanie i dodawanie do przestrzeni wszystkich "łatek"
