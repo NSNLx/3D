@@ -15,12 +15,13 @@ def bezier_surface(control_points, resolution=64):
 
 
     surface_points = np.zeros((resolution, resolution, 3))
-    #inicjacja powierzchni beziera
+    #inicjacja powierzchni beziera(wypełnienie tablicy zerami dla danego kształtu)
 
 
     for i in range(m):
         for j in range(n):
             bernstein_uv = np.outer(bernstein(m - 1, i, u), bernstein(n - 1, j, k))
+            # obliczenie iloczynu dwóch wektorów
             surface_points += bernstein_uv[:, :, None] * control_points[i, j]
     return surface_points
     #suma wszystkich wkładów, ważone funkcją bernsteina
@@ -57,6 +58,7 @@ def read_bezier_patches(file_path):
             current_line += 1
             pts.append([float(x) for x in parts])
         patch = np.array(pts).reshape((deg_u + 1, deg_v + 1, 3))
+        #zmiana struktury danych bez zmieniania wartości
         patches.append(patch)
 
     return patches
@@ -81,7 +83,7 @@ def run_bezier_program(file_path):
         mesh = pv.PolyData(points)
         mesh_surface = mesh.delaunay_2d()
         plotter.add_mesh(mesh_surface, color='lightblue', show_edges=True)
-    # przetwarzanie wszystkich "łatek"
+    # przetwarzanie i dodawanie do przestrzeni wszystkich "łatek"
 
     plotter.show()
     # wynik końcowy
