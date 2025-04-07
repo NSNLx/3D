@@ -29,7 +29,7 @@ def read_bezier_patches(file_path):
     patches = []
 
     with open(file_path, "r") as file:
-        # Wczytujemy wszystkie niepuste linie
+        # Wczytujemy wszystkie linie
         lines = [line.strip() for line in file if line.strip()]
 
 
